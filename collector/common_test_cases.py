@@ -57,6 +57,7 @@ _MOE_MODEL_CONFIGS: list[list] = [
     [4096, 1536, 8, 128, "Qwen/Qwen3-235B-A22B"],  # qwen3-moe, 235b-a22b
     [6144, 2560, 8, 160, "Qwen/Qwen3-Coder-480B-A35B-Instruct"],  # qwen3-moe, 480b-a35b
     [7168, 2048, 8, 384, "moonshotai/Kimi-K2-Instruct"],  # kimi k2
+    [7168, 2048, 8, 384, "moonshotai/Kimi-K2.5"],  # kimi k2.5 (compressed-tensors int4_wo packaging; same shape, separate registration for COLLECTOR_MODEL_PATH filter and support-matrix)
     [7168, 2048, 8, 384, "nvidia/Kimi-K2.5-NVFP4"],  # kimi k2.5 nvfp4 (same shape, separate collection for fp4 kernels)
     [3072, 1536, 8, 256, "MiniMaxAI/MiniMax-M2.5"],  # minimax m2.5 (also covers nvidia/MiniMax-M2.5-NVFP4)
     [2880, 2880, 4, 128, "openai/gpt-oss-120b"],
