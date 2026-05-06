@@ -150,9 +150,16 @@ def get_moe_test_cases():
         # SM100 uses DEEPGEMM/TRTLLM backend with UE8M0 scale (MXFP8 style).
         moe_list += ["fp8_block"]
 
-    # SM90 specific quant mode.
+    # SM89/SM90 (L40s, Hopper) specific quant modes.
+    # w4a16_mxfp4 — MXFP4-packed int4 weight + bf16/fp16 activation.
+    # w4afp8       — int4 weight + FP8 activation (CutlassFusedMoE WInt4AFP8 method).
+    #                Removed in PR #480 due to a trtllm 1.2 bug; re-enabled here for
+    #                trtllm 1.3+ to back compressed-tensors int4_wo serving on Hopper.
+    #                Per fused_moe_cutlass.py SUPPORTED_QUANT_ALGOS, W4A8_AWQ is gated
+    #                to SM in {89, 90} — Blackwell (SM100+) has no int4-weight MoE kernel
+    #                and must remain uncovered until upstream adds one.
     if 86 < sm_version < 100:
-        moe_list += ["w4a16_mxfp4"]
+        moe_list += ["w4a16_mxfp4", "w4afp8"]
 
     if sm_version >= 100:
         moe_list += ["nvfp4", "w4a16_mxfp4", "w4a8_mxfp4_mxfp8"]
